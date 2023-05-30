@@ -125,7 +125,8 @@ class UnpackCommand extends BaseCommand {
     $io = $this->getIO();
     $json = new JsonFile(Factory::getComposerFile());
     $manipulator = new JsonConfigSource($json);
-    $locker = $this->getComposer()->getLocker();
+    $composer = $this->getComposer();
+    $locker = $composer->getLocker();
     $lockData = $locker->getLockData();
     $manipulator->removeLink('require-dev', $package);
     foreach ($lockData['packages-dev'] as $i => $pkg) {
@@ -147,10 +148,10 @@ class UnpackCommand extends BaseCommand {
 
     // force removal of files under vendor/
     if (version_compare('2.0.0', PluginInterface::PLUGIN_API_VERSION, '>')) {
-        $locker = new Locker($io, $lockFile, $this->composer->getRepositoryManager(), $this->composer->getInstallationManager(), $jsonContent);
+        $locker = new Locker($io, $lockFile, $composer->getRepositoryManager(), $composer->getInstallationManager(), $jsonContent);
     } else {
-        $locker = new Locker($io, $lockFile, $this->composer->getInstallationManager(), $jsonContent);
+        $locker = new Locker($io, $lockFile, $composer->getInstallationManager(), $jsonContent);
     }
-    $this->composer->setLocker($locker);
+    $composer->setLocker($locker);
   }
 }
