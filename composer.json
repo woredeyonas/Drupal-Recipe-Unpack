@@ -1,0 +1,27 @@
+{
+    "name": "ewcomposer/unpack",
+    "description": "Composer functionality to individualize package management of module dependencies.",
+    "type": "composer-plugin",
+    "keywords": ["drupal", "drupal_recipe"],
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "version": "1.0",
+    "require": {
+      "composer-plugin-api": "^2",
+      "php": ">=7.3.0"
+    },
+    "autoload": {
+      "psr-4": {
+        "Drupal\\Recipe\\Unpack\\": ""
+      }
+    },
+    "config": {
+      "sort-packages": true
+    },
+    "extra": {
+      "class": "Drupal\\Recipe\\Unpack\\Plugin"
+    },
+    "require-dev": {
+      "composer/composer": "^1.8@stable"
+    }
+  }
