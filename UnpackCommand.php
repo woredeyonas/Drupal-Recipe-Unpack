@@ -145,8 +145,9 @@ class UnpackCommand extends BaseCommand {
     $lockData['packages-dev'] = array_values($lockData['packages-dev']);
     $lockData['content-hash'] = Locker::getContentHash($jsonContent);
     $lockFile = new JsonFile(substr($json->getPath(), 0, -4).'lock', null, $io);
+    $lockFile->write($lockData);
 
-    // force removal of files under vendor/
+    // Forcefully remove files under vendor.
     if (version_compare('2.0.0', PluginInterface::PLUGIN_API_VERSION, '>')) {
         $locker = new Locker($io, $lockFile, $composer->getRepositoryManager(), $composer->getInstallationManager(), $jsonContent);
     } else {
