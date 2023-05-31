@@ -65,11 +65,11 @@ class UnpackCommand extends BaseCommand {
 
     $dependencies = $pkg->getRequires() ?? [];
     foreach ($dependencies as $dependency) {
-      $op->addPackage($dependency->getTarget(), $dependency->getConstraint(), false);
+      $op->addPackage($dependency->getTarget(), $dependency->getPrettyConstraint(), false);
     }
     $devDependencies = $pkg->getDevRequires() ?? [];
     foreach ($devDependencies as $devDependency) {
-      $op->addPackage($devDependency->getTarget(), $devDependency->getConstraint(), true);
+      $op->addPackage($devDependency->getTarget(), $devDependency->getPrettyConstraint(), true);
     }
 
     $this->updateComposer($op, $installedRepo);
