@@ -19,7 +19,7 @@
       "sort-packages": true
     },
     "extra": {
-      "class": "Drupal\\Recipe\\Unpack\\Plugin"
+      "class": "Drupal\\Recipe\\Unpack\\Composer\\Plugin"
     },
     "require-dev": {
       "composer/composer": "^1.8@stable"

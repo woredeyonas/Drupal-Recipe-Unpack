@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Recipe\Unpack;
+namespace Drupal\Recipe\Unpack\Command;
 
 use Composer\Factory;
 use Composer\Config\JsonConfigSource;
@@ -63,10 +63,12 @@ class UnpackCommand extends BaseCommand {
       }
     }
 
+    // Unpack non-dev packages.
     $dependencies = $pkg->getRequires() ?? [];
     foreach ($dependencies as $dependency) {
       $op->addPackage($dependency->getTarget(), $dependency->getPrettyConstraint(), false);
     }
+    // Unpack dev packages.
     $devDependencies = $pkg->getDevRequires() ?? [];
     foreach ($devDependencies as $devDependency) {
       $op->addPackage($devDependency->getTarget(), $devDependency->getPrettyConstraint(), true);
@@ -77,6 +79,17 @@ class UnpackCommand extends BaseCommand {
     return 0;
   }
 
+  /**
+   * Updates the composer json file with dependencies..
+   *
+   * @param \Drupal\Recipe\Unpack\Operation $op
+   *   The Operation object.
+   * @param \Composer\Repository\RepositoryManager $installedRepo
+   *   The Composer repository manager service.
+   *
+   * @return void
+   *
+   */
   protected function updateComposer(Operation $op, RepositoryManager $installedRepo):void {
     $versionParser = new VersionParser();
     $jsonPath = Factory::getComposerFile();
@@ -86,7 +99,6 @@ class UnpackCommand extends BaseCommand {
 
     try {
       foreach ($op->getPackages() as $link) {
-        $package = $installedRepo->findPackage($link['name'], '*');
         $link['type'] = 'require';
         $link['constraints'] = $link['version'];
 
@@ -107,8 +119,6 @@ class UnpackCommand extends BaseCommand {
             $jsonManipulator->removeSubNode('require-dev', $link['name']);
         }
 
-        //$constraint = end($link['constraints']);
-
         if (!$jsonManipulator->addLink($link['type'], $link['name'], $link['constraints'], $op->shouldSort())) {
             throw new \RuntimeException(sprintf('Unable to unpack package "%s".', $link['name']));
         }
@@ -121,6 +131,15 @@ class UnpackCommand extends BaseCommand {
     }
   }
 
+  /**
+   * Updates the composer lock file with dependencies..
+   *
+   * @param string $package
+   *   The recipe package name.
+   *
+   * @return void
+   *
+   */
   protected function updateLock(string $package):void {
     $io = $this->getIO();
     $json = new JsonFile(Factory::getComposerFile());

@@ -1,8 +1,9 @@
 <?php
 
-namespace Drupal\Recipe\Unpack;
+namespace Drupal\Recipe\Unpack\Composer;
 
 use Composer\Plugin\Capability\CommandProvider as CommandProviderCapability;
+use Drupal\Recipe\Unpack\Command\UnpackCommand;
 
 /**
  * List of all commands provided by this package.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Recipe\Unpack;
+namespace Drupal\Recipe\Unpack\Composer;
 
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
@@ -14,10 +14,10 @@ use Composer\Plugin\PluginEvents;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
-use Drupal\Recipe\Unpack\CommandProvider as UnpackCommandProvider;
+use Drupal\Recipe\Unpack\Composer\CommandProvider as UnpackCommandProvider;
 
 /**
- * Composer plugin for handling drupal scaffold.
+ * Composer plugin for handling unpacking
  *
  * @internal
  */
