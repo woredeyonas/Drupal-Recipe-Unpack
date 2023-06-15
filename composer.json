@@ -12,7 +12,7 @@
     },
     "autoload": {
       "psr-4": {
-        "Drupal\\Recipe\\Unpack\\": ""
+        "Drupal\\Recipe\\Unpack\\": "src/"
       }
     },
     "config": {
