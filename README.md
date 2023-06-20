@@ -61,4 +61,30 @@ This plugin is compatible with:
 [drupal-recipe-project]: https://www.drupal.org/project/distributions_recipes
 
 ## Roadmap
-TBD
+The current feature available allows a default unpacking of a packages dependencies into the project root composer file. However, the full list of intended features are listed below:
+
+1. Have an **unpack** command that copies all requirements of a package into the project composer.json
+2. A configuration option, set in composer.json, that specifies which package types should be auto-unpacked i.e. unpacked when they're required or updated. Sample:
+```bash
+{
+    "config": {
+        "drupal-recipe": {
+            "auto-unpack": true,
+        }
+    }
+}
+```
+3. A configuration option, set in composer.json, that specifies which packages should be recursively unpacked. Sample:
+```bash
+composer unpack --recursive drupal-recipe/RECIPE
+```
+4. A configuration option, that sets the logic of removing (or not) the recipe requirement after unpacking. Sample:
+```bash
+{
+    "config": {
+        "drupal-recipe": {
+            "unpack-remove-recipe": true,
+        }
+    }
+}
+```
