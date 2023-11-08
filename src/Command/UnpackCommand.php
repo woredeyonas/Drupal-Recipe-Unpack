@@ -50,7 +50,7 @@ class UnpackCommand extends BaseCommand {
     $installedRepo = $composer->getRepositoryManager();
     $op = new Operation(true, $input->getOption('sort-packages') || $composer->getConfig()->get('sort-packages'));
     $package = reset($packages);
-    if (null === $pkg = $installedRepo->findPackage($package, '*')) {
+    if (null === $pkg = $installedRepo->getLocalRepository()->findPackage($package, '*')) {
       $io->writeError(sprintf('<error>Package %s is not installed</>', $package));
       return 1;
     }
